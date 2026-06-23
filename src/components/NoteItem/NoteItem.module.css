@@ -45,6 +45,12 @@
     background-color: #bb2d3b;
 }
 
+.button:disabled {
+    background-color: silver
+}
+
+
+
 .footer {
     display: flex;
     justify-content: space-between;

@@ -1,4 +1,4 @@
-type Tag = 'Work' | 'Personal' | 'Meeting' | 'Shopping' | 'Todo'
+export type Tag = 'Work' | 'Personal' | 'Meeting' | 'Shopping' | 'Todo'
 
 export interface Note {
     id: string,
@@ -6,5 +6,11 @@ export interface Note {
     content: string;
     createdAt: string,
     updatedAt: string,
+    tag: Tag
+}
+
+export interface PostNote {
+    title: string;
+    content?: string;
     tag: Tag
 }
