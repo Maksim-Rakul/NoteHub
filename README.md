@@ -2,7 +2,7 @@
 
 > A modern web application for managing notes with creation, editing, and deletion functionality. Built as a portfolio project to demonstrate advanced React skills and API integration.
 
-**Live Demo:** [посилання буде додано після деплою]
+**Live Demo:** https://note-hub-liard.vercel.app/
 
 ## 📖 About the Project
 
