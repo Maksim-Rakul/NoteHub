@@ -14,3 +14,10 @@ export interface PostNote {
     content?: string;
     tag: Tag
 }
+
+export interface PatchNote {
+    id: string; 
+    title?: string;
+    content?: string
+    tag: string
+}

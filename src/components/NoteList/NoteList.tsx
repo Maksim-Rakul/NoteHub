@@ -6,9 +6,10 @@ import { deleteNote } from "../../services/noteService";
 
 interface NotesListProps {
   notes: Note[];
+  onEdit: (note: Note) => void;
 }
 
-const NoteList = ({ notes }: NotesListProps) => {
+const NoteList = ({ notes, onEdit }: NotesListProps) => {
   const queryClient = useQueryClient();
 
   const noteMutation = useMutation({
@@ -20,13 +21,22 @@ const NoteList = ({ notes }: NotesListProps) => {
     noteMutation.mutate(noteId);
   };
 
-  return (
-    <ul className={css.list}>
-      {notes.map((note) => (
-        <NoteItem key={note.id} note={note} onDeleteClick={handleDelete} />
-      ))}
-    </ul>
-  );
+  if (notes.length > 0) {
+    return (
+      <ul className={css.list}>
+        {notes.map((note) => (
+          <NoteItem
+            key={note.id}
+            note={note}
+            onDeleteClick={handleDelete}
+            onEdit={onEdit}
+          />
+        ))}
+      </ul>
+    );
+  } else {
+    return <p>Not found</p>;
+  }
 };
 
 export default NoteList;

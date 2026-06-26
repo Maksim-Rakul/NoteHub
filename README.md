@@ -1,75 +1,49 @@
-# React + TypeScript + Vite
+# 📝 NoteHub
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> A modern web application for managing notes with creation, editing, and deletion functionality. Built as a portfolio project to demonstrate advanced React skills and API integration.
 
-Currently, two official plugins are available:
+**Live Demo:** [посилання буде додано після деплою]
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 📖 About the Project
 
-## React Compiler
+NoteHub is a feature-rich note-taking application that allows users to efficiently manage their notes. The application integrates with a third-party API to provide reliable data storage and retrieval. With a clean and intuitive interface, users can create, edit, delete, search, and filter notes with ease.
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+### Who is this application for?
 
-Note: This will impact Vite dev & build performances.
+- For students who need to organize their study materials
+- For professionals managing daily tasks and ideas
+- For anyone who wants to keep their thoughts organized
+- For users who appreciate a clean and efficient note-taking experience
 
-## Expanding the ESLint configuration
+## ✨ Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+| Feature                     | Description                                          |
+| --------------------------- | ---------------------------------------------------- |
+| ➕ **Create notes**         | Add new notes with titles, content, and tags         |
+| ✏️ **Edit notes**           | Update existing notes with ease                      |
+| 🗑️ **Delete notes**         | Remove notes you no longer need                      |
+| 🔍 **Search with debounce** | Real-time search optimization for better performance |
+| 🏷️ **Filter by tag**        | Quickly find notes by specific tags                  |
+| 📄 **Pagination**           | Efficient navigation through large note collections  |
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🛠️ Technologies
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Core
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+| Technology     | Description                                 |
+| -------------- | ------------------------------------------- |
+| **HTML5**      | Semantic markup                             |
+| **CSS3**       | Stylization with Modern Normalize           |
+| **TypeScript** | Type safety and better developer experience |
+| **React**      | UI library for building the interface       |
+| **Vite**       | Build tool and development server           |
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Libraries
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+| Library            | Purpose                             |
+| ------------------ | ----------------------------------- |
+| **Axios**          | HTTP client for API requests        |
+| **Formik**         | Form management and validation      |
+| **Yup**            | Schema validation for forms         |
+| **TanStack Query** | Server state management and caching |
+| **use-debounce**   | Search optimization with debounce   |

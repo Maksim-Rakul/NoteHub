@@ -1,12 +1,14 @@
 import { ErrorMessage, Field, Form, Formik, type FormikHelpers } from "formik";
 import css from "./NoteForm.module.css";
-import type { PostNote, Tag } from "../../types/note";
+import type { Note, PatchNote, PostNote, Tag } from "../../types/note";
 import * as Yup from "yup";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createNote } from "../../services/noteService";
+import { createNote, patchNote } from "../../services/noteService";
 
 interface NoteFormProps {
   onClose: () => void;
+  editNote: Note | null;
+  clearForm: () => void;
 }
 
 interface InitialValuesProps {
@@ -29,11 +31,20 @@ const NoteFormSchema = Yup.object().shape({
     .required(),
 });
 
-const NoteForm = ({ onClose }: NoteFormProps) => {
+const NoteForm = ({ onClose, editNote }: NoteFormProps) => {
   const queryClient = useQueryClient();
+
+  const initVal = editNote || initialValues;
 
   const form = useMutation({
     mutationFn: (newNote: PostNote) => createNote(newNote),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["notes"] });
+    },
+  });
+
+  const edit = useMutation({
+    mutationFn: (patchedNote: PatchNote) => patchNote(patchedNote),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["notes"] });
     },
@@ -43,12 +54,17 @@ const NoteForm = ({ onClose }: NoteFormProps) => {
     values: InitialValuesProps,
     actions: FormikHelpers<InitialValuesProps>,
   ) => {
-    form.mutate(values);
+    if (editNote) {
+      edit.mutate({ id: editNote.id, ...values });
+    } else {
+      form.mutate(values);
+    }
+    onClose();
     actions.resetForm();
   };
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={initVal}
       onSubmit={handleSubmit}
       validationSchema={NoteFormSchema}
     >
@@ -88,7 +104,7 @@ const NoteForm = ({ onClose }: NoteFormProps) => {
             Cancel
           </button>
           <button type="submit" className={css.submitButton} disabled={false}>
-            Create note
+            {editNote ? "Patch note" : "Create note"}
           </button>
         </div>
       </Form>

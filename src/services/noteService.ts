@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { Note, PostNote } from "../types/note";
+import type { Note, PatchNote, PostNote } from "../types/note";
 
 interface NotesHTTPResponse {
     notes: Note[];
@@ -13,11 +13,13 @@ const api = axios.create({
     headers: {'Authorization': `Bearer ${token}`}    
 })
 
-export const fetchNotes = async (page: number, search?: string) => {
-    const res = await api.get<NotesHTTPResponse>('/notes', {
+export const fetchNotes = async (page: number, search?: string, tag?: string | null) => {
+    const searchTag = tag === "All" ? null : tag
+    const res = await api.get<NotesHTTPResponse>(`/notes`, {
         params: {
             page,
-            search
+            search,
+            tag: searchTag
         }
     })
 
@@ -32,3 +34,13 @@ export const deleteNote = async (noteId: string) => {
     await api.delete(`/notes/${noteId}`)
 }
 
+export const patchNote = async (patchNote: PatchNote) => {
+    console.log(patchNote);
+    
+    const res = await api.patch(`/notes/${patchNote.id}`, {
+        title: patchNote.title, content: patchNote.content, tag: patchNote.tag
+    })
+    
+    console.log(res.data);
+    
+}
