@@ -37,7 +37,7 @@ export const deleteNote = async (noteId: string) => {
 
 export const patchNote = async (patchNote: PatchNote) => {
     
-    const res = await api.patch(`/notes/${patchNote.id}`, {
+    const res = await api.patch(`/notes/${patchNote.id}?sortBy=created`, {
         title: patchNote.title, content: patchNote.content, tag: patchNote.tag
     })
     
