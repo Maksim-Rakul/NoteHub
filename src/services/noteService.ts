@@ -19,7 +19,8 @@ export const fetchNotes = async (page: number, search?: string, tag?: string | n
         params: {
             page,
             search,
-            tag: searchTag
+            tag: searchTag,
+            perPage: 12
         }
     })
 
