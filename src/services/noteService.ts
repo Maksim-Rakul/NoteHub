@@ -20,6 +20,7 @@ export const fetchNotes = async (page: number, search?: string, tag?: string | n
             page,
             search,
             tag: searchTag
+
         }
     })
 
@@ -35,12 +36,7 @@ export const deleteNote = async (noteId: string) => {
 }
 
 export const patchNote = async (patchNote: PatchNote) => {
-    console.log(patchNote);
-    
-    const res = await api.patch(`/notes/${patchNote.id}`, {
+     api.patch(`/notes/${patchNote.id}`, {
         title: patchNote.title, content: patchNote.content, tag: patchNote.tag
     })
-    
-    console.log(res.data);
-    
 }
