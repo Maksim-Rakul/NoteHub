@@ -40,3 +40,5 @@ export const patchNote = async (patchNote: PatchNote) => {
         title: patchNote.title, content: patchNote.content, tag: patchNote.tag
     })
 }
+
+    
