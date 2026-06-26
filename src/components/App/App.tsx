@@ -2,16 +2,16 @@ import css from "./App.module.css";
 import SearchBox from "../SearchBox/SearchBox";
 import NoteList from "../NoteList/NoteList";
 import Pagination from "../Pagination/Pagination";
-import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import { fetchNotes } from "../../services/noteService";
-import { useState } from "react";
 import Loading from "../Loading/Loading";
 import Error from "../Error/Error";
 import NoteForm from "../NoteForm/NoteForm";
 import Modal from "../Modal/Modal";
 import SideBar from "../SideBar/SideBar";
+
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { fetchNotes } from "../../services/noteService";
+import { useState } from "react";
 import type { Note } from "../../types/note";
-// import Modal from "../Modal/Modal";
 
 const App = () => {
   const [page, setPage] = useState(1);
