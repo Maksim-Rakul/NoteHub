@@ -1,4 +1,10 @@
 import axios from "axios";
+import type { Note, PatchNote, PostNote } from "../types/note";
+
+interface NotesHTTPResponse {
+    notes: Note[];
+    totalPages: number;
+}
 
 const token = import.meta.env.VITE_API_TOKEN
 
@@ -7,17 +13,34 @@ const api = axios.create({
     headers: {'Authorization': `Bearer ${token}`}    
 })
 
-export const fetchNotes = async () => {
-    const res = await api.get('/notes?page=1&perPage=12')
-    
+export const fetchNotes = async (page: number, search?: string, tag?: string | null) => {
+    const searchTag = tag === "All" ? null : tag
+    const res = await api.get<NotesHTTPResponse>(`/notes`, {
+        params: {
+            page,
+            search,
+            tag: searchTag
+        }
+    })
+
     return res.data
 }
 
-export const createNote = () => {
-  
+export const createNote = async (noteObj: PostNote) => {
+    await api.post(`/notes`, noteObj)
 }
 
-export const deleteNote = () => {
-  
+export const deleteNote = async (noteId: string) => {
+    await api.delete(`/notes/${noteId}`)
 }
 
+export const patchNote = async (patchNote: PatchNote) => {
+    console.log(patchNote);
+    
+    const res = await api.patch(`/notes/${patchNote.id}`, {
+        title: patchNote.title, content: patchNote.content, tag: patchNote.tag
+    })
+    
+    console.log(res.data);
+    
+}

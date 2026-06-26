@@ -1,0 +1,9 @@
+.loading {
+    text-align: center;
+    padding: 15px 40px;
+    background-color: #b7eff7;
+    font-size: 16px;
+    letter-spacing: 2px;
+    margin: 0 auto;
+    max-width: 400px;
+}

@@ -1,10 +1,74 @@
-import { ErrorMessage, Field, Form, Formik } from "formik";
+import { ErrorMessage, Field, Form, Formik, type FormikHelpers } from "formik";
 import css from "./NoteForm.module.css";
+import type { Note, PatchNote, PostNote, Tag } from "../../types/note";
+import * as Yup from "yup";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { createNote, patchNote } from "../../services/noteService";
 
-const NoteForm = () => {
+interface NoteFormProps {
+  onClose: () => void;
+  editNote: Note | null;
+  clearForm: () => void;
+}
+
+interface InitialValuesProps {
+  title: string;
+  content: string;
+  tag: Tag;
+}
+
+const initialValues: InitialValuesProps = {
+  title: "",
+  content: "",
+  tag: "Todo",
+};
+
+const NoteFormSchema = Yup.object().shape({
+  title: Yup.string().min(3).max(50).required(),
+  content: Yup.string().max(500),
+  tag: Yup.string()
+    .oneOf(["Work", "Personal", "Meeting", "Shopping", "Todo"])
+    .required(),
+});
+
+const NoteForm = ({ onClose, editNote }: NoteFormProps) => {
+  const queryClient = useQueryClient();
+
+  const initVal = editNote || initialValues;
+
+  const form = useMutation({
+    mutationFn: (newNote: PostNote) => createNote(newNote),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["notes"] });
+    },
+  });
+
+  const edit = useMutation({
+    mutationFn: (patchedNote: PatchNote) => patchNote(patchedNote),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["notes"] });
+    },
+  });
+
+  const handleSubmit = (
+    values: InitialValuesProps,
+    actions: FormikHelpers<InitialValuesProps>,
+  ) => {
+    if (editNote) {
+      edit.mutate({ id: editNote.id, ...values });
+    } else {
+      form.mutate(values);
+    }
+    onClose();
+    actions.resetForm();
+  };
   return (
-    <Formik initialValues={{}} onSubmit={() => {}}>
-      <Form>
+    <Formik
+      initialValues={initVal}
+      onSubmit={handleSubmit}
+      validationSchema={NoteFormSchema}
+    >
+      <Form className={css.form}>
         <div className={css.formGroup}>
           <label htmlFor="title">Title</label>
           <Field id="title" type="text" name="title" className={css.input} />
@@ -36,11 +100,11 @@ const NoteForm = () => {
         </div>
 
         <div className={css.actions}>
-          <button type="button" className={css.cancelButton}>
+          <button type="button" className={css.cancelButton} onClick={onClose}>
             Cancel
           </button>
           <button type="submit" className={css.submitButton} disabled={false}>
-            Create note
+            {editNote ? "Patch note" : "Create note"}
           </button>
         </div>
       </Form>
