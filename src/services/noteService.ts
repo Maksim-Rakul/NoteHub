@@ -15,7 +15,7 @@ const api = axios.create({
 
 export const fetchNotes = async (page: number, search?: string, tag?: string | null) => {
     const searchTag = tag === "All" ? null : tag
-    const res = await api.get<NotesHTTPResponse>(`/notes`, {
+    const res = await api.get<NotesHTTPResponse>(`/notes?sortBy=created`, {
         params: {
             page,
             search,
@@ -37,7 +37,7 @@ export const deleteNote = async (noteId: string) => {
 
 export const patchNote = async (patchNote: PatchNote) => {
     
-    const res = await api.patch(`/notes/${patchNote.id}?sortBy=created`, {
+    const res = await api.patch(`/notes/${patchNote.id}`, {
         title: patchNote.title, content: patchNote.content, tag: patchNote.tag
     })
     
