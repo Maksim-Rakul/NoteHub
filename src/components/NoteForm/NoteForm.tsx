@@ -104,7 +104,7 @@ const NoteForm = ({ onClose, editNote }: NoteFormProps) => {
             Cancel
           </button>
           <button type="submit" className={css.submitButton} disabled={false}>
-            {editNote ? "Patch note" : "Create note"}
+            {editNote ? "Patch" : "Create note"}
           </button>
         </div>
       </Form>
